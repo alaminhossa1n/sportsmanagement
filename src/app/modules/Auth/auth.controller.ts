@@ -1,3 +1,5 @@
+import { NextFunction, Request, Response } from "express";
+import { AuthServices } from "./auth.service";
 
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -12,3 +14,8 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
       next(err);
     }
   };
+
+  export const AuthControllers = {
+    loginUser,
+  };
+  
