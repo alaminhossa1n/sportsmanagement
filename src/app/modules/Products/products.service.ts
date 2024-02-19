@@ -21,8 +21,15 @@ const updateProductFromDB = async (id: string, payload: Partial<TProducts>) => {
   return result;
 };
 
+//get products
+const getProductsFromDB = async () => {
+  const result = await ProductModel.find();
+  return result;
+};
+
 export const ProductsServices = {
   createProductsIntoDB,
   deleteProductFromDB,
   updateProductFromDB,
+  getProductsFromDB,
 };

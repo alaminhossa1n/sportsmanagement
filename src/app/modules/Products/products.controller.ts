@@ -42,6 +42,21 @@ const deleteProduct = async (
   }
 };
 
+//get products
+const getProducts = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await ProductsServices.getProductsFromDB();
+
+    res.status(201).json({
+      success: true,
+      statusCode: 201,
+      message: "Product Retrieved successfully",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 const updateProduct = async (
   req: Request,
   res: Response,
@@ -65,5 +80,6 @@ const updateProduct = async (
 export const ProductController = {
   createProducts,
   deleteProduct,
-  updateProduct
+  updateProduct,
+  getProducts
 };
