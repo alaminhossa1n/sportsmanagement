@@ -42,7 +42,28 @@ const deleteProduct = async (
   }
 };
 
+const updateProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.id;
+    const result = await ProductsServices.updateProductFromDB(id, req.body);
+
+    res.status(201).json({
+      success: true,
+      statusCode: 201,
+      message: "Product Updated successfully",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const ProductController = {
   createProducts,
   deleteProduct,
+  updateProduct
 };
