@@ -1,4 +1,4 @@
-import { TProducts } from "./products.interface";
+import { SportsItemFilters, TProducts } from "./products.interface";
 import ProductModel from "./products.model";
 
 //create product
@@ -22,10 +22,67 @@ const updateProductFromDB = async (id: string, payload: Partial<TProducts>) => {
 };
 
 //get products
-const getProductsFromDB = async (query: Record<string, undefined>) => {
-  console.log(query);
-  const result = await ProductModel.find({ sportType: "Basketball" });
-  return result;
+const getProductsFromDB = async (queryParams: SportsItemFilters) => {
+  try {
+    let filter: any = {};
+
+    // Filter by Sport Type
+    if (queryParams.sportType) {
+      filter.sportType = queryParams.sportType;
+    }
+
+    // Filter by Brand
+    if (queryParams.brand) {
+      filter.brand = { $regex: new RegExp(queryParams.brand, 'i') };
+    }
+
+    // Filter by Size
+    if (queryParams.size) {
+      filter.size = queryParams.size;
+    }
+
+    // Filter by Price Range
+    if (queryParams.minPrice || queryParams.maxPrice) {
+      filter.price = {};
+      if (queryParams.minPrice) filter.price.$gte = queryParams.minPrice;
+      if (queryParams.maxPrice) filter.price.$lte = queryParams.maxPrice;
+    }
+
+    // Filter by Material
+    if (queryParams.material) {
+      filter.material = queryParams.material;
+    }
+
+    // Filter by Color
+    if (queryParams.color) {
+      filter.color = queryParams.color;
+    }
+
+    // Filter by Condition
+    if (queryParams.condition) {
+      filter.condition = queryParams.condition;
+    }
+
+    // Additional Filters (e.g., weight, style)
+    // Add more filters based on your data model
+
+    const result = await ProductModel.find(filter);
+
+    return {
+      success: true,
+      statusCode: 200,
+      message: "Products retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    console.error("Error in getProductsFromDB:", error);
+    return {
+      success: false,
+      statusCode: 500,
+      message: "Internal server error",
+      data: null,
+    };
+  }
 };
 
 export const ProductsServices = {
