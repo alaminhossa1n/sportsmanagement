@@ -45,7 +45,7 @@ const deleteProduct = async (
 //get products
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await ProductsServices.getProductsFromDB();
+    const result = await ProductsServices.getProductsFromDB(req.query);
 
     res.status(201).json({
       success: true,
@@ -81,5 +81,5 @@ export const ProductController = {
   createProducts,
   deleteProduct,
   updateProduct,
-  getProducts
+  getProducts,
 };

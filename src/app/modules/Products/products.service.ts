@@ -22,8 +22,9 @@ const updateProductFromDB = async (id: string, payload: Partial<TProducts>) => {
 };
 
 //get products
-const getProductsFromDB = async () => {
-  const result = await ProductModel.find();
+const getProductsFromDB = async (query: Record<string, undefined>) => {
+  console.log(query);
+  const result = await ProductModel.find({ sportType: "Basketball" });
   return result;
 };
 
