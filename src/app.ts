@@ -4,8 +4,13 @@ import { AuthRoutes } from "./app/modules/Auth/auth.routes";
 import { ProductsRoutes } from "./app/modules/Products/products.routes";
 const app: Application = express();
 
+const corsOptions = {
+  origin: "http://localhost:5173", // Specify your development origin
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use("/api/auth", AuthRoutes);
 app.use("/api/products", ProductsRoutes);
