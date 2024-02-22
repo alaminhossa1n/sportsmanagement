@@ -33,7 +33,7 @@ const getProductsFromDB = async (queryParams: SportsItemFilters) => {
 
     // Filter by Brand
     if (queryParams.brand) {
-      filter.brand = { $regex: new RegExp(queryParams.brand, 'i') };
+      filter.brand = { $regex: new RegExp(queryParams.brand, "i") };
     }
 
     // Filter by Size
@@ -85,9 +85,16 @@ const getProductsFromDB = async (queryParams: SportsItemFilters) => {
   }
 };
 
+const getProductByIdFromDB = async (id: string) => {
+  const result = await ProductModel.findById({ _id: id });
+
+  return result;
+};
+
 export const ProductsServices = {
   createProductsIntoDB,
   deleteProductFromDB,
   updateProductFromDB,
   getProductsFromDB,
+  getProductByIdFromDB,
 };

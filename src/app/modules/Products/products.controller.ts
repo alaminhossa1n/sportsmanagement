@@ -57,6 +57,28 @@ const getProducts = async (req: Request, res: Response, next: NextFunction) => {
     next(err);
   }
 };
+
+//get product by id
+const getProductById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id = req.params.id;
+
+  try {
+    const result = await ProductsServices.getProductByIdFromDB(id);
+
+    res.status(201).json({
+      success: true,
+      statusCode: 201,
+      message: "Product Retrieved successfully",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 const updateProduct = async (
   req: Request,
   res: Response,
@@ -82,4 +104,5 @@ export const ProductController = {
   deleteProduct,
   updateProduct,
   getProducts,
+  getProductById
 };
