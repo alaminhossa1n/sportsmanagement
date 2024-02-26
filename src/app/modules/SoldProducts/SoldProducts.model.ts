@@ -4,7 +4,7 @@ import { TSoldProducts } from "./SoldProducts.interface";
 const soldProductsSchema = new Schema<TSoldProducts>({
   productID: { type: String, required: true },
   buyerName: { type: String, required: true },
-  dateOfSell: { type: Date, required: true },
+  dateOfSell: { type: Date },
   quantity: { type: Number, required: true },
 });
 
