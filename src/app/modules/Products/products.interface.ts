@@ -1,7 +1,7 @@
 export type TProducts = {
   name: string;
   price: number;
-  quantity: string;
+  quantity: number;
   sportType?: string;
   brand?: string;
   size?: string;

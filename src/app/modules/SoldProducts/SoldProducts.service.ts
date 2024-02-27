@@ -17,16 +17,18 @@ const addSellProductIntoDB = async (payload: TSoldProducts) => {
       throw new AppError(404, "Product does not exist");
     }
 
-    if (payload.quantity > isProductExist.quantity) {
+    const availableQuantity = isProductExist.quantity;
+
+    if (payload.quantity > availableQuantity) {
       throw new AppError(
         500,
-        `Sorry, only ${isProductExist.quantity} products available`
+        `Sorry, only ${availableQuantity} products available`
       );
     }
 
     await ProductModel.updateOne(
       { _id: isProductExist._id },
-      { $inc: { quantity: -payload.quantity } }
+      { $inc: { quantity: -payload.quantity} }
     ).session(session);
 
     const result = await soldProductsModel.create([payload], { session });

@@ -5,7 +5,7 @@ const productSchema = new Schema<TProducts>(
   {
     name: { type: String, required: true },
     price: { type: Number, required: true },
-    quantity: { type: String, required: true },
+    quantity: { type: Number, required: true },
     sportType: { type: String },
     brand: { type: String },
     size: { type: String },
