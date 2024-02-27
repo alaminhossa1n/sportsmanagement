@@ -1,13 +1,52 @@
+import { startSession } from "mongoose";
+import AppError from "../../errors/AppError";
+import ProductModel from "../Products/products.model";
 import { TSoldProducts } from "./SoldProducts.interface";
 import soldProductsModel from "./SoldProducts.model";
 
 const addSellProductIntoDB = async (payload: TSoldProducts) => {
-  const result = await soldProductsModel.create(payload);
-  return result;
+  const session = await startSession();
+  session.startTransaction();
+
+  try {
+    const isProductExist = await ProductModel.findOne({
+      _id: payload.productID,
+    }).session(session);
+
+    if (!isProductExist) {
+      throw new AppError(404, "Product does not exist");
+    }
+
+    if (payload.quantity > isProductExist.quantity) {
+      throw new AppError(
+        500,
+        `Sorry, only ${isProductExist.quantity} products available`
+      );
+    }
+
+    await ProductModel.updateOne(
+      { _id: isProductExist._id },
+      { $inc: { quantity: -payload.quantity } }
+    ).session(session);
+
+    const result = await soldProductsModel.create([payload], { session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return result;
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+
+    // Handle errors appropriately, e.g., log or throw a custom error
+    console.error("Error in addSellProductIntoDB:", error);
+
+    throw new AppError(500, "Internal server error");
+  }
 };
 
 const getSellsFromDB = async ({ query }) => {
-
   const dateFilter: any = {};
 
   switch (query) {

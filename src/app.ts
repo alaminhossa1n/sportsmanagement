@@ -3,6 +3,7 @@ import cors from "cors";
 import { AuthRoutes } from "./app/modules/Auth/auth.routes";
 import { ProductsRoutes } from "./app/modules/Products/products.routes";
 import { soldRoutes } from "./app/modules/SoldProducts/SoldProducts.routes";
+import { globalErrorhandler } from "./app/middlewares/globalErrorhandler";
 const app: Application = express();
 
 const corsOptions = {
@@ -20,5 +21,7 @@ app.use("/api/product", soldRoutes);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello Mr. Developer!");
 });
+
+app.use(globalErrorhandler);
 
 export default app;
