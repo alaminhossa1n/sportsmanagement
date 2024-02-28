@@ -13,6 +13,12 @@ const deleteProductFromDB = async (id: string) => {
   return result;
 };
 
+const deleteProductsFromDB = async (ids: string) => {
+
+  const result = await ProductModel.deleteMany({ _id: { $in: ids } });
+  return result;
+};
+
 //update product
 const updateProductFromDB = async (id: string, payload: Partial<TProducts>) => {
   const result = await ProductModel.findByIdAndUpdate({ _id: id }, payload, {
@@ -97,4 +103,5 @@ export const ProductsServices = {
   updateProductFromDB,
   getProductsFromDB,
   getProductByIdFromDB,
+  deleteProductsFromDB,
 };

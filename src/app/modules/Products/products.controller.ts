@@ -42,6 +42,26 @@ const deleteProduct = async (
   }
 };
 
+const deleteProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { ids } = req.body;
+    const result = await ProductsServices.deleteProductsFromDB(ids);
+
+    res.status(201).json({
+      success: true,
+      statusCode: 201,
+      message: "Products Deleted successfully",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 //get products
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -79,6 +99,8 @@ const getProductById = async (
     next(err);
   }
 };
+
+//update product
 const updateProduct = async (
   req: Request,
   res: Response,
@@ -102,7 +124,8 @@ const updateProduct = async (
 export const ProductController = {
   createProducts,
   deleteProduct,
+  deleteProducts,
   updateProduct,
   getProducts,
-  getProductById
+  getProductById,
 };
