@@ -7,7 +7,10 @@ import { globalErrorhandler } from "./app/middlewares/globalErrorhandler";
 const app: Application = express();
 
 const corsOptions = {
-  origin: "http://localhost:5173", // Specify your development origin
+  origin: [
+    "http://localhost:5173",
+    "https://peppy-lollipop-82fc11.netlify.app/",
+  ], // Specify your development origin
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
