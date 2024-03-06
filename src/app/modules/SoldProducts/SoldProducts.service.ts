@@ -28,7 +28,7 @@ const addSellProductIntoDB = async (payload: TSoldProducts) => {
 
     await ProductModel.updateOne(
       { _id: isProductExist._id },
-      { $inc: { quantity: -payload.quantity} }
+      { $inc: { quantity: -payload.quantity } }
     ).session(session);
 
     const result = await soldProductsModel.create([payload], { session });
@@ -75,9 +75,10 @@ const getSellsFromDB = async ({ query }) => {
     default:
       break;
   }
+  console.log(dateFilter);
 
   const result = await soldProductsModel.find({
-    dateOfSell: { $gte: new Date(new Date().setHours(0, 0, 0, 0)) },
+    dateOfSell: dateFilter.dateOfSell,
   });
   return result;
 };
