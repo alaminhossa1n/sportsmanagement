@@ -6,12 +6,17 @@ import { soldRoutes } from "./app/modules/SoldProducts/SoldProducts.routes";
 import { globalErrorhandler } from "./app/middlewares/globalErrorhandler";
 const app: Application = express();
 
+// const corsOptions = {
+//   origin: "https://peppy-lollipop-82fc11.netlify.app/",
+//   credentials: true,
+// };
+
 const corsOptions = {
   origin: [
     "http://localhost:5173",
-    "https://peppy-lollipop-82fc11.netlify.app/",
-  ], // Specify your development origin
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    "https://peppy-lollipop-82fc11.netlify.app",
+  ],
+  credentials: true,
 };
 
 app.use(express.json());
