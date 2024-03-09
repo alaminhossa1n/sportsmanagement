@@ -69,8 +69,6 @@ const getProductsFromDB = async (queryParams: SportsItemFilters) => {
       filter.condition = queryParams.condition;
     }
 
-    // Additional Filters (e.g., weight, style)
-    // Add more filters based on your data model
 
     const result = await ProductModel.find(filter);
 
