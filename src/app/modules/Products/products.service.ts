@@ -14,7 +14,6 @@ const deleteProductFromDB = async (id: string) => {
 };
 
 const deleteProductsFromDB = async (ids: string) => {
-
   const result = await ProductModel.deleteMany({ _id: { $in: ids } });
   return result;
 };
@@ -32,9 +31,13 @@ const getProductsFromDB = async (queryParams: SportsItemFilters) => {
   try {
     let filter: any = {};
 
+    // Filter by Sport name (case-insensitive)
+    if (queryParams.name) {
+      filter.name = { $regex: new RegExp(`${queryParams.name}`, "i") };
+  }
     // Filter by Sport Type
     if (queryParams.sportType) {
-      filter.sportType = queryParams.sportType;
+      filter.sportType = { $regex: new RegExp(`${queryParams.sportType}`, "i") };
     }
 
     // Filter by Brand
@@ -68,8 +71,6 @@ const getProductsFromDB = async (queryParams: SportsItemFilters) => {
     if (queryParams.condition) {
       filter.condition = queryParams.condition;
     }
-
-
     const result = await ProductModel.find(filter);
 
     return {

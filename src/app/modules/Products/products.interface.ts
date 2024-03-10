@@ -13,6 +13,7 @@ export type TProducts = {
 };
 
 export type SportsItemFilters = {
+  name?: string;
   sportType?: string;
   brand?: string;
   size?: string;
