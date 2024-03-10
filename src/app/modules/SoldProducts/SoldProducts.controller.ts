@@ -20,7 +20,7 @@ const sellProduct = async (req: Request, res: Response, next: NextFunction) => {
 
 const getSells = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const query = req.query;
+    const query: any = req.query;
 
     const result = await soldProductsService.getSellsFromDB(query);
 

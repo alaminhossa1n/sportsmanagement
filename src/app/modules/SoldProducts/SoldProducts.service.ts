@@ -48,7 +48,7 @@ const addSellProductIntoDB = async (payload: TSoldProducts) => {
   }
 };
 
-const getSellsFromDB = async ({ query }) => {
+const getSellsFromDB = async ({ query }: { query: any }) => {
   const dateFilter: any = {};
 
   switch (query) {
@@ -59,7 +59,7 @@ const getSellsFromDB = async ({ query }) => {
       break;
     case "weekly":
       dateFilter.dateOfSell = {
-        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000),
+        $gte: new Date((new Date() as any) - 7 * 24 * 60 * 60 * 1000),
       }; // Assuming a week is 7 days
       break;
     case "monthly":
@@ -75,7 +75,6 @@ const getSellsFromDB = async ({ query }) => {
     default:
       break;
   }
-  console.log(dateFilter);
 
   const result = await soldProductsModel.find({
     dateOfSell: dateFilter.dateOfSell,
