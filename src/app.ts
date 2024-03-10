@@ -6,10 +6,6 @@ import { soldRoutes } from "./app/modules/SoldProducts/SoldProducts.routes";
 import { globalErrorhandler } from "./app/middlewares/globalErrorhandler";
 const app: Application = express();
 
-// const corsOptions = {
-//   origin: "https://peppy-lollipop-82fc11.netlify.app/",
-//   credentials: true,
-// };
 
 const corsOptions = {
   origin: [
